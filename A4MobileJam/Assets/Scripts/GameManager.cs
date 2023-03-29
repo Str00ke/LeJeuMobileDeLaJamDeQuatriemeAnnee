@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     static private GameManager instance;
 
     bool _isPause = false;
+
+    
     List<Player> _gamePlayersList = new List<Player>();
     int _currPTurn = 0;
     
@@ -68,14 +70,10 @@ public class GameManager : MonoBehaviour
         
     }
 
-    void Pause()
+
+    public void Pause()
     {
         _isPause = !_isPause;
-    }
-
-    void LoadScene(string sceneName)
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
     }
 
     void StartGame(int pNbr)
@@ -92,7 +90,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < pNbr; i++)
         {
             GameObject pGo = Instantiate(_playerPrefab);
-            GameObject pBall = Instantiate(_ballPrefab);
+            GameObject pBall = Instantiate(_ballPrefab, _currentLevel.PlayerStartPosition, Quaternion.identity);
             pGo.GetComponent<Player>().Ball = pBall.transform.GetChild(1).GetComponent<Ball>();
             pBall.transform.GetChild(1).GetComponent<Ball>().Player = pGo.GetComponent<Player>();
             _gamePlayersList.Add(pGo.GetComponent<Player>());

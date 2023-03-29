@@ -29,8 +29,9 @@ public class Target : MonoBehaviour
         _currPlayer = FindObjectOfType<Player>();
     }
 
-    public void Init()
+    public void Init(List<TargetPart> list)
     {
+        _parts = list;
         //_targetMaterial = new Material(GameManager.Instance.TargetMaterial);
         //_targetMaterial.set
     }
@@ -42,5 +43,21 @@ public class Target : MonoBehaviour
             _currPlayer.IsOnTarget = true;
             _currPlayer.Ball.GetComponentInChildren<CameraManager>().SetToTarget();
         }
+
+        //Debug.Log(Vector3.Distance(transform.position, _currPlayer.Ball.transform.position));
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        for (int i = 0; i < _parts.Count; i++)
+        {
+            //Gizmos.color = _parts[i]._col;
+            //Gizmos.DrawSphere(transform.position, _parts[i]._outerRange);
+            UnityEditor.Handles.color = _parts[i]._col;
+            UnityEditor.Handles.DrawSolidDisc(transform.position, Vector3.up, _parts[i]._outerRange);
+        }
+    }
+
+#endif
 }

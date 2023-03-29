@@ -16,4 +16,4 @@ MonoBehaviour:
   _levelGeometry: {fileID: 4876294092382441872, guid: c9b419403e32ca24aa445431e0418d76, type: 3}
   _targetPosition: {x: 159, y: 0.2, z: -100.5}
   _targetRadius: 0
-  _playerStartPosition: {x: 0, y: 0.2, z: 0}
+  _playerStartPosition: {x: 165, y: 5, z: -183}

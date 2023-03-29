@@ -13,6 +13,9 @@ public class Level : ScriptableObject
     [SerializeField] private float _targetRadius;
 
     [SerializeField] private Vector3 _playerStartPosition;
+
+    [SerializeField] List<TargetPart> _targetParts = new List<TargetPart>();
+
     public Vector3 TargetPosition
     {
         get { return _targetPosition; }

@@ -65,7 +65,6 @@ public class Player : MonoBehaviour
             d *= -1;
             //Vector3 dx = d - _ball.gameObject.transform.position;
             Vector3 v = new Vector3(d.x, 0, d.y);
-            Debug.Log(Vector3.Magnitude(v));
 
             DebugDir = v;
         }
