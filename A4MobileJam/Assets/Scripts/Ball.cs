@@ -6,6 +6,15 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     Rigidbody _rb;
+    Collider _col;
+    MeshRenderer _meshRenderer;
+    bool _mrToggle = false;
+
+    public MeshRenderer mr
+    {
+        get { return _meshRenderer; }
+        set { _meshRenderer = value; }
+    }
 
     Vector3 _dirVec;
 
@@ -29,6 +38,8 @@ public class Ball : MonoBehaviour
 
     public System.Action _onStopRolling;
 
+    bool _isBegin = true;
+
     public Player Player
     {
         get { return _player; }
@@ -47,19 +58,25 @@ public class Ball : MonoBehaviour
     void Start()
     {
         _rb = _ball.GetComponent<Rigidbody>();
-
-        _player._onRelease += Shoot;
+        _col = _ball.GetComponent<SphereCollider>();
+        _meshRenderer = _ball.GetComponent<MeshRenderer>();
+        _col.enabled = false;
+        _meshRenderer.enabled = false;
+        _rb.useGravity = false;
 
         _player.Ball = this;
     }
 
     private void OnDestroy()
     {
-        _player._onRelease -= Shoot;
+        ToggleInscription(false);
     }
 
     void Update()
     {
+        //if (_player.IsPlaying && !_meshRenderer.enabled) _meshRenderer.enabled = true;
+        if (_mrToggle && _meshRenderer != null && !_meshRenderer.enabled) _meshRenderer.enabled = true;
+
         if (Input.GetKeyDown(KeyCode.Space)) StopBallVel();
 
         if (!_player.IsOnTarget) transform.position = _ball.transform.position;
@@ -69,8 +86,9 @@ public class Ball : MonoBehaviour
 
     Vector3 GetShootDirection(Vector3 dir)
     {
-        _dirVec = dir;
-        float t = Mathf.Min(Vector3.Magnitude(dir) / _maxShootPower, 1);
+
+        _dirVec = dir / _shootPowerCoeff;//Vector3.Normalize(dir) * Mathf.Min(Vector3.Magnitude(dir), _maxShootPower);
+        float t = Mathf.Min((Vector3.Magnitude(dir) / _shootPowerCoeff) / _maxShootPower, 1);
         float baseAngle = Mathf.Max(Mathf.Lerp(_minAngleShoot, _maxAngleShoot, _shootAngleRatio.Evaluate(t)), 0);
         _dirVec = Quaternion.AngleAxis(-baseAngle, transform.right) * _dirVec;
         return _dirVec;
@@ -79,13 +97,27 @@ public class Ball : MonoBehaviour
 
     void Shoot(Vector3 dir)
     {
-        _rb.velocity = GetShootDirection(dir) * _shootPowerCoeff;
+        if (_isBegin)
+        {
+            _col.enabled = true;
+            _rb.useGravity = true;
+            _meshRenderer.enabled = true;
+            _isBegin = false;
+        }
+        _rb.velocity = GetShootDirection(dir)/* * _shootPowerCoeff*/;
         _isRolling = true;
     }
 
-    private void OnDrawGizmos()
+    public void EnableMeshRender()
     {
-        //DrawArrow.ForGizmo(transform.position, _dirVec * _shootPowerCoeff, Color.red);
+        _mrToggle = true;
+    }
+
+
+    public void ToggleInscription(bool play)
+    {
+        if (play) _player._onRelease += Shoot;
+        else _player._onRelease -= Shoot;
     }
 
     private void StopBallVel()

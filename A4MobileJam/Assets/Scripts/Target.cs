@@ -24,6 +24,12 @@ public class Target : MonoBehaviour
 
     Player _currPlayer;
 
+    public Player CurrPlayer
+    {
+        get => _currPlayer;
+        set => _currPlayer = value;
+    }
+
     private void Start()
     {
         _currPlayer = FindObjectOfType<Player>();
@@ -43,8 +49,18 @@ public class Target : MonoBehaviour
             _currPlayer.IsOnTarget = true;
             _currPlayer.Ball.GetComponentInChildren<CameraManager>().SetToTarget();
         }
+        //Debug.Log(AttribPoints(_currPlayer));
+    }
 
-        //Debug.Log(Vector3.Distance(transform.position, _currPlayer.Ball.transform.position));
+    public int AttribPoints(Player p)
+    {
+        float dist = Vector3.Distance(transform.position, p.Ball.transform.parent.GetChild(0).position/*transform.TransformPoint(p.Ball.transform.position)*/);
+        for (int i = _parts.Count - 1; i >= 0; --i)
+        {
+            //Debug.Log("ForP: " + _parts[i]._points + " " + dist + " " + _parts[i]._outerRange + " " + (dist <= _parts[i]._outerRange));
+            if (dist <= _parts[i]._outerRange) return _parts[i]._points;
+        }
+        return 0;
     }
 
 #if UNITY_EDITOR

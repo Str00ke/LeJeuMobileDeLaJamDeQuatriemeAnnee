@@ -16,6 +16,8 @@ public class Level : ScriptableObject
 
     [SerializeField] List<TargetPart> _targetParts = new List<TargetPart>();
 
+    public List<TargetPart> TargetParts => _targetParts;
+
     public Vector3 TargetPosition
     {
         get { return _targetPosition; }

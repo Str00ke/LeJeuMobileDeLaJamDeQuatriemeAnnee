@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class SlingshotDrawer
 {
     private LineRenderer _lineRenderer;
@@ -52,8 +53,17 @@ public class SlingshotDrawer
     private Vector3 object_pos;
     private float angle;
     public void Update()
-    {     
-        currPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+    {
+        if (GameManager.Instance.TouchType == GameManager.ETouchType.MOUSE)
+        {
+            currPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
+            mouse_pos = Input.mousePosition;
+        }
+        else if (GameManager.Instance.TouchType == GameManager.ETouchType.TOUCH)
+        {
+            currPos = new Vector3(Input.GetTouch(0).position.x, Input.GetTouch(0).position.y, 0);
+            mouse_pos = Input.GetTouch(0).position;
+        }
         float x = (_startPos.x + currPos.x) / 2;
         float y = (_startPos.y + currPos.y) / 2;
         line.transform.position = new Vector3(x, y, 0);
@@ -61,8 +71,6 @@ public class SlingshotDrawer
         float dy = Mathf.Abs(currPos.y - _startPos.y);
         rt.sizeDelta = new Vector2(Mathf.Max(dx, dy), 100);
 
-
-        mouse_pos = Input.mousePosition;
         mouse_pos.z = -10;
         object_pos = line.transform.transform.parent.position;
         mouse_pos.x = mouse_pos.x - object_pos.x;
