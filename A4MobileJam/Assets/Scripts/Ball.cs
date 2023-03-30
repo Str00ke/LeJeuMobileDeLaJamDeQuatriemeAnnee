@@ -80,7 +80,7 @@ public class Ball : MonoBehaviour
         //if (_player.IsPlaying && !_meshRenderer.enabled) _meshRenderer.enabled = true;
         if (_mrToggle && _meshRenderer != null && !_meshRenderer.enabled) _meshRenderer.enabled = true;
 
-        if (Input.GetKeyDown(KeyCode.Space)) StopBallVel();
+        //if (Input.GetKeyDown(KeyCode.Space)) StopBallVel();
 
         if (!_player.IsOnTarget) transform.position = _ball.transform.position;
 

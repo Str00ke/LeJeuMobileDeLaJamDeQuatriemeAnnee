@@ -45,6 +45,17 @@ public class GlobalManager : MonoBehaviour
 
     static private List<SetP> _sets = new List<SetP>();
     public List<SetP> Sets => _sets;
+    List<GameObject> arrayPSet = new List<GameObject>();
+    public void EraseList()
+    {
+        _sets.Clear();
+        foreach (var item in arrayPSet)
+        {
+            Destroy(item);
+        }
+        arrayPSet.Clear();
+    }
+
 
     public void LoadScene(string sceneName)
     {
@@ -76,6 +87,7 @@ public class GlobalManager : MonoBehaviour
             set._strName = "Player_" + (i+1).ToString();
             _sets.Add(set);
             set._img.sprite = _ballsSpr[rndBall];
+            arrayPSet.Add(p);
         }
     }
         

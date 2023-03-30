@@ -176,6 +176,7 @@ public class GameManager : MonoBehaviour
             _gamePlayersList.Add(pGo.GetComponent<Player>());
         }
 
+
     }
 
     public void DoTurn()
@@ -219,6 +220,7 @@ public class GameManager : MonoBehaviour
     bool CallNextRound()
     {
         _startCam.depth = -50;
+        _globalMan.EraseList();
         NextRound();
         return true;
     }

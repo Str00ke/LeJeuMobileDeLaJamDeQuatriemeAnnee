@@ -20,7 +20,7 @@ public class CameraManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1)) SetToTarget();   
+        //if (Input.GetMouseButtonDown(1)) SetToTarget();   
     }
 
     public void SetToTarget()

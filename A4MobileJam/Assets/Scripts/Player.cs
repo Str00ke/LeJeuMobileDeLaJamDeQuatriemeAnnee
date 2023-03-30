@@ -139,7 +139,7 @@ public class Player : MonoBehaviour
     public void GetPoints(Target tar)
     {
         Points = tar.AttribPoints(this);
-        Debug.Log(Points);
+        //Debug.Log(Points);
     }
 
     public void EndTurn()
