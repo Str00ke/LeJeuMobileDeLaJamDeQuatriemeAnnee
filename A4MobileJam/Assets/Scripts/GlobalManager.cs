@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -23,17 +24,19 @@ public class GlobalManager : MonoBehaviour
         public Image _img;
         public InputField _name;
         public Material _mat;
+        public Sprite _spr;
         public string _strName
         {
             get => _name.text;
             set => _name.text = value;
         }
 
-        public SetP(Image image, InputField name, Material mat)
+        public SetP(Image image, InputField name, Material mat, Sprite spr)
         {
             _img = image;
             _name = name;
             _mat = mat;
+            _spr = spr;
             _strName = _name.text;
             _name.contentType = InputField.ContentType.Name;
             _name.inputType = InputField.InputType.Standard;
@@ -54,6 +57,16 @@ public class GlobalManager : MonoBehaviour
             Destroy(item);
         }
         arrayPSet.Clear();
+    }
+
+    static public List<SetP> GetList()
+    {
+        return _sets;
+    }
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(this);
     }
 
 
@@ -83,7 +96,7 @@ public class GlobalManager : MonoBehaviour
             int rndBall = Random.Range(0, nbrs.Count);
             nbrs.RemoveAt(rndBall);
             GameObject p = Instantiate(_playerData, _layoutGroup.transform);
-            SetP set = new SetP(p.transform.GetChild(0).GetComponent<Image>(), p.transform.GetChild(1).GetComponent<InputField>(), _balls[rndBall]);
+            SetP set = new SetP(p.transform.GetChild(0).GetComponent<Image>(), p.transform.GetChild(1).GetComponent<InputField>(), _balls[rndBall], _ballsSpr[rndBall]);
             set._strName = "Player_" + (i+1).ToString();
             _sets.Add(set);
             set._img.sprite = _ballsSpr[rndBall];

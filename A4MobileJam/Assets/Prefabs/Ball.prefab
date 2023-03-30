@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ball: {fileID: 3461032553054938810}
-  _shootPowerCoeff: 5.5
+  _shootPowerCoeff: 5.3
   _minAngleShoot: 0
   _maxAngleShoot: 10
   _maxShootPower: 15

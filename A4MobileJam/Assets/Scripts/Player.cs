@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
 
     public int Points { get; private set; }
     public Image Img { get; private set; }
+    public Sprite Spr { get; private set; }
     public string Name { get; private set; }
 
     public Ball Ball
@@ -56,9 +57,10 @@ public class Player : MonoBehaviour
         _cam = _ball.GetComponentInChildren<Camera>();
     }
 
-    public void Init(Image img, string name)
+    public void Init(Image img, string name, Sprite spr)
     {
         Img = img;
+        Spr = spr;
         Name = name;
     }
 

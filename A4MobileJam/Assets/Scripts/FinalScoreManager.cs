@@ -32,10 +32,11 @@ public class FinalScoreManager : MonoBehaviour
             PlayerScorePrefabData pS = Instantiate(_playerScorePrefab, _verticalBoxHolder.transform).transform.GetComponent<PlayerScorePrefabData>();
             pS.SetData(new PSPData
             (
-                el.Img,
+                pS.transform.GetChild(1).GetComponent<Image>(),
                 el.Name,
                 el.Points,
-                i+1
+                i+1,
+                el.Spr
             ));
         }
     }

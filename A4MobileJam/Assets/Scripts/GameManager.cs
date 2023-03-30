@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
             if (_startCam == null) _startCam = GameObject.Find("StartCamera").GetComponent<Camera>();
             Vector3 start = _currTarget.transform.position;
             start.y += _startYPos;
+            if (_gamePlayersList[0].Cam == null) return;
             Vector3 end = _gamePlayersList[0].Cam.transform.position;
 
             Quaternion startRot = Quaternion.Euler(new Vector3(90, 0, 0));
@@ -168,11 +169,11 @@ public class GameManager : MonoBehaviour
             pGo.GetComponent<Player>().Ball = pBall.transform.GetChild(1).GetComponent<Ball>();
             if (_globalMan.Sets.Count > 0)
             {
-                pGo.GetComponent<Player>().Init(_globalMan.Sets[i]._img, _globalMan.Sets[i]._strName);
+                pGo.GetComponent<Player>().Init(_globalMan.Sets[i]._img, _globalMan.Sets[i]._strName, _globalMan.Sets[i]._spr);
                 pGo.GetComponent<Player>().Ball.BallMat = _globalMan.Sets[i]._mat;
             }
             else
-                pGo.GetComponent<Player>().Init(null, "Player_" + (i+1).ToString());
+                pGo.GetComponent<Player>().Init(null, "Player_" + (i+1).ToString(), null);
             pBall.transform.GetChild(1).GetComponent<Ball>().Player = pGo.GetComponent<Player>();
             if (i == 0)
             {
