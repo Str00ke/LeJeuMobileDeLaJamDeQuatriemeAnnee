@@ -71,6 +71,7 @@ public class SlingshotDrawer
         float dx = Mathf.Abs(currPos.x - _startPos.x);
         float dy = Mathf.Abs(currPos.y - _startPos.y);
         rt.sizeDelta = new Vector2(Mathf.Max(dx, dy), 50);
+        line.GetComponent<Image>().color = Color.Lerp(Color.green, Color.red, Vector3.Magnitude(rt.sizeDelta) / 250);
 
         mouse_pos.z = -10;
         object_pos = line.transform.transform.parent.position;

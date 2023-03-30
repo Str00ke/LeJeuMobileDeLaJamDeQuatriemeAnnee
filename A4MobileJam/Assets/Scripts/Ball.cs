@@ -35,6 +35,9 @@ public class Ball : MonoBehaviour
     [SerializeField]                    private AnimationCurve _shootAngleRatio;
     [SerializeField]                    private float _minVelBeforeStop;
 
+
+    [SerializeField]                    private AudioSource _pocSource;
+
     //public float ShootPower => _shootPowerCoeff;
     //public float ShootAngle => _shootAngle;
 
@@ -66,7 +69,6 @@ public class Ball : MonoBehaviour
         _col.enabled = false;
         _meshRenderer.enabled = false;
         _rb.useGravity = false;
-
         _player.Ball = this;
     }
 
@@ -107,6 +109,7 @@ public class Ball : MonoBehaviour
             _meshRenderer.enabled = true;
             _isBegin = false;
         }
+        _pocSource.Play();
         _rb.velocity = GetShootDirection(dir)/* * _shootPowerCoeff*/;
         _isRolling = true;
     }

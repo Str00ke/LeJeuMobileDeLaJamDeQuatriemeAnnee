@@ -146,6 +146,7 @@ public class Player : MonoBehaviour
     {
         if (IsOnTarget) HasFinished = true;
         CurrentDepth = 0;
+        IsPlaying = false;
         Ball.ToggleInscription(false);
         GameManager.Instance.DoTurn();
     }

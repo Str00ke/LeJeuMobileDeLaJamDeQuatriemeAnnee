@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelName: Jardin
   _levelGeometry: {fileID: 664232755764206530, guid: 7a196cdb8db6a1942a244e2f1640057f, type: 3}
-  _targetPosition: {x: 280, y: 0.1, z: -159.87}
+  _targetPosition: {x: 77, y: 0.1, z: 49.63}
   _targetRadius: 0
   _playerStartPosition: {x: 121, y: 3.85, z: -168.65}
   _targetParts:

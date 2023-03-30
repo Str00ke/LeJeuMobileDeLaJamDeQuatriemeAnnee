@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     bool _isFirst = true;
     bool _start = true;
 
+    AudioSource _levelSource;
+    [SerializeField] AudioSource _endSource;
+
 
     public enum ETouchType
     {
@@ -54,6 +57,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AnimationCurve _startCamACPos;
     [SerializeField] private AnimationCurve _startCamACRot;
     [SerializeField] private float _startCamSpeed;
+    [SerializeField] private float _startYPos;
 
     [SerializeField] Camera _startCam;
 
@@ -107,14 +111,14 @@ public class GameManager : MonoBehaviour
         {
             if (_startCam == null) _startCam = GameObject.Find("StartCamera").GetComponent<Camera>();
             Vector3 start = _currTarget.transform.position;
-            start.y += 350;
+            start.y += _startYPos;
             Vector3 end = _gamePlayersList[0].Cam.transform.position;
 
             Quaternion startRot = Quaternion.Euler(new Vector3(90, 0, 0));
             Quaternion endRot = _gamePlayersList[0].Cam.transform.rotation;
 
             _startCam.depth = 50;
-            _startCam.transform.GetComponent<CameraManager>().MoveToSet(start, end, startRot, endRot, _startCamSpeed, _startCamACPos, _startCamACRot, CallNextRound, 1.75f, 1.5f);
+            _startCam.transform.GetComponent<CameraManager>().MoveToSet(start, end, startRot, endRot, _startCamSpeed, _startCamACPos, _startCamACRot, CallNextRound, 0.25f, 0.5f);
             _start = false;
         }
     }
@@ -150,6 +154,7 @@ public class GameManager : MonoBehaviour
         
 
         GameObject go = Instantiate(_currentLevel.LevelGeometry);
+        _levelSource = go.GetComponent<AudioSource>();
 
         //Spawn Target
         GameObject tar = Instantiate(_target, _currentLevel.TargetPosition, Quaternion.identity);
@@ -199,11 +204,11 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(MoveText(_pTurnTxt.GetComponent<RectTransform>(), _pTurnTxtPosUp, _pTurnTxtPosDown, _pTurnTxtSpeed, _pTurnTxtAC, PlayerStartTurn, 0, 0.25f));
+                    StartCoroutine(MoveText(_pTurnTxt.GetComponent<RectTransform>(), _pTurnTxtPosUp, _pTurnTxtPosDown, _pTurnTxtSpeed, _pTurnTxtAC, PlayerStartTurn, 0, 0));
                     _gamePlayersList[_currPTurn].StartTurn(_isFirst, _currPlayer);
                     _currPlayer = _gamePlayersList[_currPTurn];
                     _currPlayer.IsPlaying = false;
-                    _pTurnTxt.GetComponent<Text>().text = _currPlayer.Name + " turn";
+                    _pTurnTxt.transform.GetChild(0).GetComponent<Text>().text = _currPlayer.Name + " turn";
                     _currTarget.CurrPlayer = _currPlayer;                
                     if (_isFirst) _isFirst = false;
                 }
@@ -232,8 +237,8 @@ public class GameManager : MonoBehaviour
         else
         {
             _currPTurn = -1;
-            StartCoroutine(MoveText(_pTurnTxt.GetComponent<RectTransform>(), _pTurnTxtPosUp, _pTurnTxtPosDown, _pTurnTxtSpeed, _pTurnTxtAC, CallDoTurn, 1, 1));
-            _pTurnTxt.GetComponent<Text>().text = "Round " + _currPlayerTurnNbr;
+            StartCoroutine(MoveText(_pTurnTxt.GetComponent<RectTransform>(), _pTurnTxtPosUp, _pTurnTxtPosDown, _pTurnTxtSpeed, _pTurnTxtAC, CallDoTurn, 0.25f, 0));
+            _pTurnTxt.transform.GetChild(0).GetComponent<Text>().text = "Round " + _currPlayerTurnNbr;
         }
     }
 
@@ -256,6 +261,8 @@ public class GameManager : MonoBehaviour
 
     void EndGame()
     {
+        _levelSource.Stop();
+        _endSource.Play();
         foreach (Player p in _gamePlayersList)
         {
             p.IsPlaying = false;

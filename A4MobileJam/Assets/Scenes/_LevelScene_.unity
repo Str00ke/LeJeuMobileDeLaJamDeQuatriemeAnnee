@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571379, b: 0.3069225, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -556,8 +556,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2.2979736, y: 1437.1542}
-  m_SizeDelta: {x: -417.40405, y: -249.74849}
+  m_AnchoredPosition: {x: 4, y: 738.21277}
+  m_SizeDelta: {x: -95.326, y: -747.6791}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &597149692
 MonoBehaviour:
@@ -768,6 +768,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 528819084}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
+      propertyPath: _endSource
+      value: 
+      objectReference: {fileID: 670647216}
+    - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
+      propertyPath: _startYPos
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _scoreManager
       value: 
       objectReference: {fileID: 868230627}
@@ -869,7 +877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[1].time
-      value: 0.864471
+      value: 0.08857312
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[2].time
@@ -917,7 +925,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[1].value
-      value: 0.25647202
+      value: 0.88315654
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[2].value
@@ -953,15 +961,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[0].inSlope
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[1].inSlope
-      value: 1.053942
+      value: 0.58406985
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[2].inSlope
-      value: 2
+      value: 0.04915189
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _pTurnTxtAC.m_Curve.Array.data[0].tangentMode
@@ -1009,7 +1017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[0].outSlope
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[1].inWeight
@@ -1017,15 +1025,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[1].outSlope
-      value: 1.053942
+      value: 0.58406985
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[2].inWeight
-      value: 0
+      value: 0.26018697
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[2].outSlope
-      value: 2
+      value: 0.04915189
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACPos.m_Curve.Array.data[1].outWeight
@@ -1037,7 +1045,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACRot.m_Curve.Array.data[1].outWeight
-      value: 0.33333334
+      value: 0.14449593
       objectReference: {fileID: 0}
     - target: {fileID: 2126961318569017511, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
       propertyPath: _startCamACPos.m_Curve.Array.data[0].tangentMode
@@ -1057,6 +1065,107 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
+--- !u!1 &670647215 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2126961318569017510, guid: ed65697d49dfccc42a8ff673f17871b1, type: 3}
+  m_PrefabInstance: {fileID: 670647214}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &670647216
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670647215}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 56286b6d6d1fb0f4c91ea52f0602b592, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.75
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &718312001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,7 +1280,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 10
-    m_MaxSize: 56
+    m_MaxSize: 45
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1

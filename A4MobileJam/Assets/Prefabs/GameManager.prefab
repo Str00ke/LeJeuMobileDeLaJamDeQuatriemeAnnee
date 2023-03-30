@@ -44,12 +44,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6b0aa4d2481ed478a6ab5b06fe01d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _touchType: 0
+  _scoreManager: {fileID: 0}
+  _debugPlayerNbr: 0
   _ballPrefab: {fileID: 3461032553541867297, guid: dba39e63263af2943a21f4f398c0faaa, type: 3}
   _playerPrefab: {fileID: 7352738847198861205, guid: 18bdda3c442712c44a569eb5621c597e, type: 3}
-  _maxPlayerTurnNbr: 3
-  _slingshotOrigin: {x: 0, y: 0}
+  _maxPlayerTurnNbr: 5
+  _slingshotOrigin: {fileID: 0}
   _slingshotMaterial: {fileID: 2100000, guid: ef9a83cecfba2a443bdab303c32a1cfa, type: 2}
   _targetMaterial: {fileID: 0}
   _target: {fileID: 4736289672645323433, guid: c17dd43f16e3d904ead8d636acb6f95b, type: 3}
   _levelsPool:
   - {fileID: 11400000, guid: 0022d9e9d4a119f4f8ee62774aa6b19e, type: 2}
+  _canvas: {fileID: 0}
+  _pTurnTxt: {fileID: 0}
+  _pTurnTxtAC:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _pTurnTxtSpeed: 0
+  _pTurnTxtPosUp: {x: 0, y: 0, z: 0}
+  _pTurnTxtPosDown: {x: 0, y: 0, z: 0}
+  _startCamACPos:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _startCamACRot:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _startCamSpeed: 0
+  _startCam: {fileID: 0}
