@@ -18,6 +18,8 @@ public class Ball : MonoBehaviour
 
     Vector3 _dirVec;
 
+    public Material BallMat { get; set; }
+
     bool _isRolling = false;
 
     private Player _player; //Associated player
@@ -60,6 +62,7 @@ public class Ball : MonoBehaviour
         _rb = _ball.GetComponent<Rigidbody>();
         _col = _ball.GetComponent<SphereCollider>();
         _meshRenderer = _ball.GetComponent<MeshRenderer>();
+        _meshRenderer.material = BallMat;
         _col.enabled = false;
         _meshRenderer.enabled = false;
         _rb.useGravity = false;

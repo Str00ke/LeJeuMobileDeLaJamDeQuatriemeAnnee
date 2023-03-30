@@ -25,6 +25,7 @@ public class SlingshotDrawer
         line = new GameObject("Size");
         line.transform.parent = rotate.transform;
         line.AddComponent<Image>();
+        line.GetComponent<Image>().color = Color.red;
         rt = line.GetComponent<RectTransform>();
         _player._onRelease += OnDestroy;
         line.transform.parent.position = startPos;
@@ -69,7 +70,7 @@ public class SlingshotDrawer
         line.transform.position = new Vector3(x, y, 0);
         float dx = Mathf.Abs(currPos.x - _startPos.x);
         float dy = Mathf.Abs(currPos.y - _startPos.y);
-        rt.sizeDelta = new Vector2(Mathf.Max(dx, dy), 100);
+        rt.sizeDelta = new Vector2(Mathf.Max(dx, dy), 50);
 
         mouse_pos.z = -10;
         object_pos = line.transform.transform.parent.position;

@@ -17,4 +17,16 @@ MonoBehaviour:
   _targetPosition: {x: 0, y: 0, z: 0}
   _targetRadius: 0
   _playerStartPosition: {x: 0, y: 0, z: 0}
-  _targetParts: []
+  _targetParts:
+  - _outerRange: 4.69
+    _innerRange: 0
+    _points: 1
+    _col: {r: 0, g: 0.006204605, b: 1, a: 0.5411765}
+  - _outerRange: 3.26
+    _innerRange: 0
+    _points: 3
+    _col: {r: 0, g: 1, b: 0.1019609, a: 0.15686275}
+  - _outerRange: 1.78
+    _innerRange: 0
+    _points: 5
+    _col: {r: 1, g: 0.02791521, b: 0, a: 0.5411765}

@@ -15,20 +15,25 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] GameObject _setPlayersPanel;
     [SerializeField] VerticalLayoutGroup _layoutGroup;
 
+    [SerializeField] List<Material> _balls;
+    [SerializeField] List<Sprite> _ballsSpr;
+
     public struct SetP
     {
         public Image _img;
         public InputField _name;
+        public Material _mat;
         public string _strName
         {
             get => _name.text;
             set => _name.text = value;
         }
 
-        public SetP(Image image, InputField name)
+        public SetP(Image image, InputField name, Material mat)
         {
             _img = image;
             _name = name;
+            _mat = mat;
             _strName = _name.text;
             _name.contentType = InputField.ContentType.Name;
             _name.inputType = InputField.InputType.Standard;
@@ -54,14 +59,23 @@ public class GlobalManager : MonoBehaviour
 
     public void GenerateSetPlayers()
     {
+        Random.InitState(System.DateTime.Now.Millisecond);
+        List<int> nbrs = new List<int>();
+        for (int i = 0; i < _balls.Count; i++)
+        {
+            nbrs.Add(i);
+        }
         _setPlayersPanel.SetActive(false);
         _layoutGroup.transform.parent.gameObject.SetActive(true);
         for (int i = 0; i < pNbr; i++)
         {
+            int rndBall = Random.Range(0, nbrs.Count);
+            nbrs.RemoveAt(rndBall);
             GameObject p = Instantiate(_playerData, _layoutGroup.transform);
-            SetP set = new SetP(p.transform.GetChild(0).GetComponent<Image>(), p.transform.GetChild(1).GetComponent<InputField>());
+            SetP set = new SetP(p.transform.GetChild(0).GetComponent<Image>(), p.transform.GetChild(1).GetComponent<InputField>(), _balls[rndBall]);
             set._strName = "Player_" + (i+1).ToString();
             _sets.Add(set);
+            set._img.sprite = _ballsSpr[rndBall];
         }
     }
         

@@ -15,7 +15,7 @@ public class AdDisplayObject : MonoBehaviour, IUnityAdsInitializationListener, I
     void Start()
     {
 #if UNITY_IOS
-	Advertisement.Initialize(myGameIdIOS, testMode);
+	Advertisement.Initialize(myGameIdIOS, testMode, this);
 	myAdUnitId = adUnitIdIOS;
 #else //if UNITY_ANDROID
         Advertisement.Initialize(myGameIdAndroid, testMode, this);

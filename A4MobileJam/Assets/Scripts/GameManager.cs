@@ -162,14 +162,16 @@ public class GameManager : MonoBehaviour
             GameObject pBall = Instantiate(_ballPrefab, _currentLevel.PlayerStartPosition, Quaternion.identity);
             pGo.GetComponent<Player>().Ball = pBall.transform.GetChild(1).GetComponent<Ball>();
             if (_globalMan.Sets.Count > 0)
+            {
                 pGo.GetComponent<Player>().Init(_globalMan.Sets[i]._img, _globalMan.Sets[i]._strName);
+                pGo.GetComponent<Player>().Ball.BallMat = _globalMan.Sets[i]._mat;
+            }
             else
                 pGo.GetComponent<Player>().Init(null, "Player_" + (i+1).ToString());
             pBall.transform.GetChild(1).GetComponent<Ball>().Player = pGo.GetComponent<Player>();
             if (i == 0)
             {
                 pBall.transform.GetChild(1).GetComponent<Ball>().EnableMeshRender();
-                _startCam = pGo.GetComponent<Player>().Cam;
             }
             _gamePlayersList.Add(pGo.GetComponent<Player>());
         }
