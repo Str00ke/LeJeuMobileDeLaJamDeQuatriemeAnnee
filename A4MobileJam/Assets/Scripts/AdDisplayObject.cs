@@ -36,13 +36,12 @@ public class AdDisplayObject : MonoBehaviour, IUnityAdsInitializationListener, I
         //    adStarted = true;
         //}
 
-        Advertisement.Load(myAdUnitId, this);
         Advertisement.Show(myAdUnitId, this);
     }
 
     public void OnInitializationComplete()
     {
-
+        Advertisement.Load(myAdUnitId, this);
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
