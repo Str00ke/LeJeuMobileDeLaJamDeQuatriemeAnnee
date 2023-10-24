@@ -552,7 +552,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.000061035156}
-  m_SizeDelta: {x: -90.29349, y: -764.9662}
+  m_SizeDelta: {x: -50.293488, y: -704.9662}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &380815114
 MonoBehaviour:
@@ -2573,7 +2573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1960953248
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3045,6 +3045,7 @@ GameObject:
   - component: {fileID: 2057743998}
   - component: {fileID: 2057744000}
   - component: {fileID: 2057744001}
+  - component: {fileID: 2057744002}
   m_Layer: 5
   m_Name: SelectBall
   m_TagString: Untagged
@@ -3070,7 +3071,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -40, y: -60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2057743998
 MonoBehaviour:
@@ -3085,7 +3086,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.83921576, g: 0.2509804, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3152,6 +3153,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36f111233ad73f54394620ece1f3f32a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2057744002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057743996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0.8955008, b: 0, a: 1}
+  m_EffectDistance: {x: 7.3, y: 9.1}
+  m_UseGraphicAlpha: 1
 --- !u!1 &2125431361
 GameObject:
   m_ObjectHideFlags: 0
