@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using GameAnalyticsSDK;
 using UnityEngine.UI;
 
 public class GlobalManager : MonoBehaviour
@@ -19,10 +19,25 @@ public class GlobalManager : MonoBehaviour
 
     [SerializeField] List<Material> _balls;
     [SerializeField] List<Sprite> _ballsSpr;
+    [SerializeField] List<int> _ballsIndexPossessed = new();
 
 
     [SerializeField] GameObject _ballSelect;
+    [SerializeField] Text _diamondsTxt;
     int _currBallSelectIndex = 0;
+
+    static int _diamonds = 0;
+    static string _ballsPossStr = "";
+    int prevDiamond = 0;
+
+    public static int GetDiamonds => _diamonds;
+    public static void AddDiamonds(int value) => _diamonds += value;
+    public static bool TryRemoveDiamonds(int value)
+    {
+        if(value > _diamonds) return false;
+        else _diamonds -= value;
+        return true;
+    }
 
     public struct SetP
     {
@@ -74,13 +89,58 @@ public class GlobalManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        if (!PlayerPrefs.HasKey("Diamonds"))
+            PlayerPrefs.SetInt("Diamonds", 0);
+        else
+            _diamonds = PlayerPrefs.GetInt("Diamonds");
+
+        if (!PlayerPrefs.HasKey("Possessed"))
+            PlayerPrefs.SetString("Possessed", "0");
+        else
+            _ballsPossStr = PlayerPrefs.GetString("Possessed");
+
+        _ballsIndexPossessed.Clear();
+
+        for (int i = 0; i < _ballsPossStr.Length; i++)
+            _ballsIndexPossessed.Add(_ballsPossStr[i]);
+
+        prevDiamond = _diamonds;
+        if (_diamondsTxt != null) _diamondsTxt.text = _diamonds.ToString();
+
     }
 
-
-    public void LoadScene(string sceneName)
+    private void Start()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        GameAnalytics.Initialize();
+        GameAnalytics.StartSession();
+        GameAnalytics.NewErrorEvent(GAErrorSeverity.Error, "Attention!");
     }
+
+    private void Update()
+    {
+        if(_diamonds != prevDiamond) //Shit code yeah I know
+        {
+            prevDiamond = _diamonds;
+            if (_diamondsTxt != null) _diamondsTxt.text = _diamonds.ToString();
+        }
+    }
+
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("Diamonds", _diamonds);
+        string str = "";
+        for (int i = 0; i < _ballsIndexPossessed.Count; i++)
+            str += _ballsIndexPossessed[i].ToString();
+
+        Debug.Log(str);
+
+        PlayerPrefs.SetString("Possessed", "0");
+
+    }
+
+    public void LoadScene(string sceneName) => UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+
 
     public void SetPlayerNbrValue(Slider s)
     {
@@ -106,17 +166,33 @@ public class GlobalManager : MonoBehaviour
             SetP set = new SetP(p.transform.GetChild(0).GetComponent<Image>(), p.transform.GetChild(1).GetComponent<InputField>(), _balls[rndBall], _ballsSpr[rndBall], i);
             set._strName = "Player_" + (i+1).ToString();
             _sets.Add(set);
-            set._img.sprite = _ballsSpr[rndBall];
+            set._img.sprite = _ballsSpr[0];//_ballsSpr[rndBall];
             arrayPSet.Add(p);
             p.GetComponent<PlayerSetIndex>().SetIndex(i);
         }
     }
-       
+    
+    public void TryBuyBall(int selected)
+    {
+        if (TryRemoveDiamonds(5))
+        {
+            _ballsIndexPossessed.Add(selected);
+            HideBallSelect(selected);
+            Debug.Log(_ballsPossStr);
+
+            //for (int i = 0; i < _ballsIndexPossessed.Count; i++)
+            //{
+            //    if (_ballsIndexPossessed[i] == selected)
+            //        
+            //}
+        }
+    }
+
     public void ShowBallSelect(int playerIndex)
     {
         _ballSelect.SetActive(true);
         _currBallSelectIndex = playerIndex;
-        _ballSelect.GetComponent<SelectBall>().Populate(_ballsSpr);
+        _ballSelect.GetComponent<SelectBall>().Populate(_ballsSpr, _ballsIndexPossessed);
     }
 
     public void HideBallSelect(int selected)

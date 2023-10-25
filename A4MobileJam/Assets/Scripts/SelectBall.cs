@@ -16,7 +16,7 @@ public class SelectBall : MonoBehaviour
         
     }
 
-    public void Populate(List<Sprite> balls)
+    public void Populate(List<Sprite> balls, List<int> ballsPossessed)
     {
         for (int i = 0; i < balls.Count; i++)
         {
@@ -28,8 +28,23 @@ public class SelectBall : MonoBehaviour
             ind.SetIndex(i);
             Image img = go.transform.AddComponent<Image>();
             img.sprite = sprite;
+
+            bool possessed = false;
+            for (int j = 0; j < ballsPossessed.Count; j++)
+            {
+                if (ballsPossessed[j] == i) possessed = true;
+            }
+
             Button btn = go.transform.AddComponent<Button>();
-            btn.onClick.AddListener(ind.CloseSelectBall);
+            if (!possessed) 
+            {
+                img.color = new Color(1f, 1f, 1f, 0.25f);
+                btn.onClick.AddListener(ind.TryBuyBall);
+            }
+            else
+                btn.onClick.AddListener(ind.CloseSelectBall);
+
+
         }
     }
 }
