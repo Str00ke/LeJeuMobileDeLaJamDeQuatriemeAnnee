@@ -33,6 +33,9 @@ public class GlobalManager : MonoBehaviour
     static string _ballsPossStr = "";
     int prevDiamond = 0;
 
+    public List<Material> Balls => _balls;
+    public List<Sprite> BallsSpr => _ballsSpr;
+
     public static int GetDiamonds => _diamonds;
     public static void AddDiamonds(int value) => _diamonds += value;
     public static bool TryRemoveDiamonds(int value)
