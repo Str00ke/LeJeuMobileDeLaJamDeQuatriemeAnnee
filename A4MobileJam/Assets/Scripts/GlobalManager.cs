@@ -102,7 +102,7 @@ public class GlobalManager : MonoBehaviour
         _ballsIndexPossessed.Clear();
 
         for (int i = 0; i < _ballsPossStr.Length; i++)
-            _ballsIndexPossessed.Add(_ballsPossStr[i]);
+            _ballsIndexPossessed.Add(_ballsPossStr[i] - '0');
 
         prevDiamond = _diamonds;
         if (_diamondsTxt != null) _diamondsTxt.text = _diamonds.ToString();
@@ -113,7 +113,6 @@ public class GlobalManager : MonoBehaviour
     {
         GameAnalytics.Initialize();
         GameAnalytics.StartSession();
-        GameAnalytics.NewErrorEvent(GAErrorSeverity.Error, "Attention!");
     }
 
     private void Update()
@@ -129,13 +128,12 @@ public class GlobalManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         PlayerPrefs.SetInt("Diamonds", _diamonds);
-        string str = "";
+        string str = string.Empty;
         for (int i = 0; i < _ballsIndexPossessed.Count; i++)
             str += _ballsIndexPossessed[i].ToString();
 
-        Debug.Log(str);
 
-        PlayerPrefs.SetString("Possessed", "0");
+        PlayerPrefs.SetString("Possessed", str);
 
     }
 
