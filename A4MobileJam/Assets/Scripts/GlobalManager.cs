@@ -20,11 +20,14 @@ public class GlobalManager : MonoBehaviour
     [SerializeField] List<Material> _balls;
     [SerializeField] List<Sprite> _ballsSpr;
     [SerializeField] List<int> _ballsIndexPossessed = new();
+    [SerializeField] List<int> _ballsPrice = new();
 
 
     [SerializeField] GameObject _ballSelect;
+    [SerializeField] Text _ballBuyConfirmPanelTxt;
     [SerializeField] Text _diamondsTxt;
     int _currBallSelectIndex = 0;
+    int _currBallTryBuy = 0;
 
     static int _diamonds = 0;
     static string _ballsPossStr = "";
@@ -172,18 +175,27 @@ public class GlobalManager : MonoBehaviour
     
     public void TryBuyBall(int selected)
     {
-        if (TryRemoveDiamonds(5))
-        {
-            _ballsIndexPossessed.Add(selected);
-            HideBallSelect(selected);
-            Debug.Log(_ballsPossStr);
+        _ballBuyConfirmPanelTxt.transform.parent.gameObject.SetActive(true);
+        _ballBuyConfirmPanelTxt.text = "Buy for " + _ballsPrice[selected].ToString() + " diamonds?";
+        _currBallTryBuy = selected;
+    }
 
+    public void TryBuyBallConfirm()
+    {
+        if (TryRemoveDiamonds(_ballsPrice[_currBallTryBuy]))
+        {
+            _ballsIndexPossessed.Add(_currBallTryBuy);
+            HideBallSelect(_currBallTryBuy);
+            _ballBuyConfirmPanelTxt.transform.parent.gameObject.SetActive(false);
             //for (int i = 0; i < _ballsIndexPossessed.Count; i++)
             //{
             //    if (_ballsIndexPossessed[i] == selected)
             //        
             //}
         }
+        else
+            _ballBuyConfirmPanelTxt.text = "Not enough diamonds!";
+
     }
 
     public void ShowBallSelect(int playerIndex)
