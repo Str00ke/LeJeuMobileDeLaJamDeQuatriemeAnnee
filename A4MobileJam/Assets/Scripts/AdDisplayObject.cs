@@ -11,7 +11,14 @@ public class AdDisplayObject : MonoBehaviour, IUnityAdsInitializationListener, I
     [SerializeField] private string adUnitIdIOS = "Interstitial_iOS";
     [SerializeField] private string myAdUnitId;
     [SerializeField] private bool adStarted;
+    [SerializeField] private AdEndCallback callback;
+
+#if UNITY_EDITOR
     private bool testMode = true;
+#else
+    private bool testMode = false;
+#endif
+
     void Start()
     {
 #if UNITY_IOS
@@ -36,13 +43,12 @@ public class AdDisplayObject : MonoBehaviour, IUnityAdsInitializationListener, I
         //    adStarted = true;
         //}
 
-        Advertisement.Load(myAdUnitId, this);
         Advertisement.Show(myAdUnitId, this);
     }
 
     public void OnInitializationComplete()
     {
-
+        Advertisement.Load(myAdUnitId, this);
     }
 
     public void OnInitializationFailed(UnityAdsInitializationError error, string message)
@@ -77,6 +83,6 @@ public class AdDisplayObject : MonoBehaviour, IUnityAdsInitializationListener, I
 
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
-
+        if(callback != null) callback.OnAdEnding();
     }
 }

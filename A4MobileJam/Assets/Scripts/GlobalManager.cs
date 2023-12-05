@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using GameAnalyticsSDK;
 using UnityEngine.UI;
 
 public class GlobalManager : MonoBehaviour
@@ -18,6 +19,31 @@ public class GlobalManager : MonoBehaviour
 
     [SerializeField] List<Material> _balls;
     [SerializeField] List<Sprite> _ballsSpr;
+    [SerializeField] List<int> _ballsIndexPossessed = new();
+    [SerializeField] List<int> _ballsPrice = new();
+
+
+    [SerializeField] GameObject _ballSelect;
+    [SerializeField] Text _ballBuyConfirmPanelTxt;
+    [SerializeField] Text _diamondsTxt;
+    int _currBallSelectIndex = 0;
+    int _currBallTryBuy = 0;
+
+    static int _diamonds = 0;
+    static string _ballsPossStr = "";
+    int prevDiamond = 0;
+
+    public List<Material> Balls => _balls;
+    public List<Sprite> BallsSpr => _ballsSpr;
+
+    public static int GetDiamonds => _diamonds;
+    public static void AddDiamonds(int value) => _diamonds += value;
+    public static bool TryRemoveDiamonds(int value)
+    {
+        if(value > _diamonds) return false;
+        else _diamonds -= value;
+        return true;
+    }
 
     public struct SetP
     {
@@ -25,18 +51,20 @@ public class GlobalManager : MonoBehaviour
         public InputField _name;
         public Material _mat;
         public Sprite _spr;
+        public int _index;
         public string _strName
         {
             get => _name.text;
             set => _name.text = value;
         }
 
-        public SetP(Image image, InputField name, Material mat, Sprite spr)
+        public SetP(Image image, InputField name, Material mat, Sprite spr, int index)
         {
             _img = image;
             _name = name;
             _mat = mat;
             _spr = spr;
+            _index = index;
             _strName = _name.text;
             _name.contentType = InputField.ContentType.Name;
             _name.inputType = InputField.InputType.Standard;
@@ -67,13 +95,56 @@ public class GlobalManager : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(this);
+        if (!PlayerPrefs.HasKey("Diamonds"))
+            PlayerPrefs.SetInt("Diamonds", 0);
+        else
+            _diamonds = PlayerPrefs.GetInt("Diamonds");
+
+        if (!PlayerPrefs.HasKey("Possessed"))
+            PlayerPrefs.SetString("Possessed", "0");
+        else
+            _ballsPossStr = PlayerPrefs.GetString("Possessed");
+
+        _ballsIndexPossessed.Clear();
+
+        for (int i = 0; i < _ballsPossStr.Length; i++)
+            _ballsIndexPossessed.Add(_ballsPossStr[i] - '0');
+
+        prevDiamond = _diamonds;
+        if (_diamondsTxt != null) _diamondsTxt.text = _diamonds.ToString();
+
     }
 
-
-    public void LoadScene(string sceneName)
+    private void Start()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+        GameAnalytics.Initialize();
+        GameAnalytics.StartSession();
     }
+
+    private void Update()
+    {
+        if(_diamonds != prevDiamond) //Shit code yeah I know
+        {
+            prevDiamond = _diamonds;
+            if (_diamondsTxt != null) _diamondsTxt.text = _diamonds.ToString();
+        }
+    }
+
+
+    private void OnApplicationQuit()
+    {
+        PlayerPrefs.SetInt("Diamonds", _diamonds);
+        string str = string.Empty;
+        for (int i = 0; i < _ballsIndexPossessed.Count; i++)
+            str += _ballsIndexPossessed[i].ToString();
+
+
+        PlayerPrefs.SetString("Possessed", str);
+
+    }
+
+    public void LoadScene(string sceneName) => UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+
 
     public void SetPlayerNbrValue(Slider s)
     {
@@ -96,12 +167,60 @@ public class GlobalManager : MonoBehaviour
             int rndBall = Random.Range(0, nbrs.Count);
             nbrs.RemoveAt(rndBall);
             GameObject p = Instantiate(_playerData, _layoutGroup.transform);
-            SetP set = new SetP(p.transform.GetChild(0).GetComponent<Image>(), p.transform.GetChild(1).GetComponent<InputField>(), _balls[rndBall], _ballsSpr[rndBall]);
+            SetP set = new SetP(p.transform.GetChild(0).GetComponent<Image>(), p.transform.GetChild(1).GetComponent<InputField>(), _balls[rndBall], _ballsSpr[rndBall], i);
             set._strName = "Player_" + (i+1).ToString();
             _sets.Add(set);
-            set._img.sprite = _ballsSpr[rndBall];
+            set._img.sprite = _ballsSpr[0];//_ballsSpr[rndBall];
             arrayPSet.Add(p);
+            p.GetComponent<PlayerSetIndex>().SetIndex(i);
         }
     }
-        
+    
+    public void TryBuyBall(int selected)
+    {
+        _ballBuyConfirmPanelTxt.transform.parent.gameObject.SetActive(true);
+        _ballBuyConfirmPanelTxt.text = "Buy for " + _ballsPrice[selected].ToString() + " diamonds?";
+        _currBallTryBuy = selected;
+    }
+
+    public void TryBuyBallConfirm()
+    {
+        if (TryRemoveDiamonds(_ballsPrice[_currBallTryBuy]))
+        {
+            _ballsIndexPossessed.Add(_currBallTryBuy);
+            HideBallSelect(_currBallTryBuy);
+            _ballBuyConfirmPanelTxt.transform.parent.gameObject.SetActive(false);
+            //for (int i = 0; i < _ballsIndexPossessed.Count; i++)
+            //{
+            //    if (_ballsIndexPossessed[i] == selected)
+            //        
+            //}
+        }
+        else
+            _ballBuyConfirmPanelTxt.text = "Not enough diamonds!";
+
+    }
+
+    public void ShowBallSelect(int playerIndex)
+    {
+        _ballSelect.SetActive(true);
+        _currBallSelectIndex = playerIndex;
+        _ballSelect.GetComponent<SelectBall>().Populate(_ballsSpr, _ballsIndexPossessed);
+    }
+
+    public void HideBallSelect(int selected)
+    {
+        _ballSelect.SetActive(false);
+        for (int i = _ballSelect.transform.GetChild(0).childCount - 1; i > 0; i--)
+        {
+            Destroy(_ballSelect.transform.GetChild(0).GetChild(i).gameObject);
+        }
+        Destroy(_ballSelect.transform.GetChild(0).GetChild(0).gameObject);
+
+        SetP p = _sets[_currBallSelectIndex];
+        p._mat = _balls[selected];
+        p._spr = _ballsSpr[selected];
+        _sets[_currBallSelectIndex] = p;
+        _layoutGroup.transform.GetChild(_currBallSelectIndex).GetChild(0).GetComponent<Image>().sprite = p._spr;
+    }
 }
